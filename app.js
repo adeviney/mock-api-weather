@@ -1,10 +1,10 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const sampledata_corvallis = require("./sampledata_corvallis.json")
-const sampledata_boulder = require("./sampledata_boulder.json")
-const sampledata_corvallis_imperial = require("./sampledata_corvallis_imperial.json")
-const sampledata_corvallis_tempContainsEight = require("./sampledata_corvallis_tempContainsAnEight.json")
+const sampledata_corvallis = require("./data/sampledata_corvallis.json")
+const sampledata_boulder = require("./data/sampledata_boulder.json")
+const sampledata_corvallis_imperial = require("./data/sampledata_corvallis_imperial.json")
+const sampledata_corvallis_tempContainsEight = require("./data/sampledata_corvallis_tempContainsAnEight.json")
 
 app.get('/', (req, res) => {
   res.send(`
