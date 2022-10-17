@@ -3,6 +3,8 @@ const app = express()
 const port = 3000
 const sampledata_corvallis = require("./sampledata_corvallis.json")
 const sampledata_boulder = require("./sampledata_boulder.json")
+const sampledata_corvallis_imperial = require("./sampledata_corvallis_imperial.json")
+const sampledata_corvallis_tempContainsEight = require("./sampledata_corvallis_tempContainsAnEight.json")
 
 app.get('/', (req, res) => {
   res.send(`
@@ -19,11 +21,14 @@ app.get('/', (req, res) => {
 })
 
 app.get('/data/2.5/weather', (req, res) => {
-    if (req.query.appid != "1234") {
+    if (req.query.appid != "1234" && req.query.appid != "d7c9477357dddb826aec055177569789") {
       res.send("Oops! Please use your API key. (1234)")
     }
-    else if (!req.query.lat || !req.query.lon) {
-      res.send("Oops! Please provide parameters for both latitude and longitude. (these can be dummy values)")
+    else if ((!req.query.lat || !req.query.lon) && !req.query.q) {
+      res.send("Oops! Please provide parameters for either q or both latitude and longitude. (these can be dummy values)")
+    }
+    else if (req.query.units === "imperial") {
+      res.json(sampledata_corvallis_imperial)
     }
     else if (req.query.lat === "40.015" && req.query.lon === "105.2705") {
       res.json(sampledata_boulder)
@@ -35,6 +40,15 @@ app.get('/data/2.5/weather', (req, res) => {
       res.redirect("http://localhost:3000/data/2.5/weather?appid=1234&lat=44.56&lon=123.26")
     }
 
+  })
+
+  app.get('/lucky/data/2.5/weather', (req, res) => {
+    if (req.query.appid != "1234" && req.query.appid != "d7c9477357dddb826aec055177569789") {
+      res.send("Oops! Please use your API key. (1234)")
+    }
+    else {
+      res.json(sampledata_corvallis_tempContainsEight)
+    }
   })
 
 app.listen(port, () => {
