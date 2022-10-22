@@ -6,6 +6,9 @@ const sampledata_boulder = require("./data/sampledata_boulder.json")
 const sampledata_corvallis_imperial = require("./data/sampledata_corvallis_imperial.json")
 const sampledata_corvallis_tempContainsEight = require("./data/sampledata_corvallis_tempContainsAnEight.json")
 
+require('dotenv').config();
+const API_KEY = process.env.MYAPIKEY
+
 app.get('/', (req, res) => {
   res.send(`
   You've reached the index of a Mock API. <br/>
@@ -21,7 +24,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/data/2.5/weather', (req, res) => {
-    if (req.query.appid != "1234" && req.query.appid != "d7c9477357dddb826aec055177569789") {
+    if (req.query.appid != "1234" && req.query.appid != API_KEY) {
       res.send("Oops! Please use your API key. (1234)")
     }
     else if ((!req.query.lat || !req.query.lon) && !req.query.q) {
@@ -43,7 +46,7 @@ app.get('/data/2.5/weather', (req, res) => {
   })
 
   app.get('/lucky/data/2.5/weather', (req, res) => {
-    if (req.query.appid != "1234" && req.query.appid != "d7c9477357dddb826aec055177569789") {
+    if (req.query.appid != "1234" && req.query.appid != API_KEY) {
       res.send("Oops! Please use your API key. (1234)")
     }
     else {
